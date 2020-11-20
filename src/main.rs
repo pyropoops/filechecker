@@ -64,9 +64,10 @@ fn start(path: &str) -> Result<()> {
         let name = entry.name;
         let size: f32 = entry.size as f32 / (1024.0 * 1024.0);
         total += entry.size;
-        println!("{}: {} MB", name, size);
+        println!("{}: {} MB [{} GB]", name, size, size / 1024.0);
     }
-    println!("Total: {} MB", total as f32 / (1024.0 * 1024.0));
+    let size = total as f32 / (1024.0 * 1024.0);
+    println!("Total: {} MB [{} GB]", size, size / 1024.0);
     Ok(())
 }
 
