@@ -62,13 +62,40 @@ fn start(path: &str) -> Result<()> {
     let mut total: usize = 0;
     for entry in vec {
         let name = entry.name;
-        let size: f32 = entry.size as f32 / (1024.0 * 1024.0);
         total += entry.size;
-        println!("{}: {} MB [{} GB]", name, size, size / 1024.0);
+        println!("{}: {}", name, get_formatted_size(entry.size));
     }
-    let size = total as f32 / (1024.0 * 1024.0);
-    println!("Total: {} MB [{} GB]", size, size / 1024.0);
+    println!("Total: {}", get_formatted_size(total));
     Ok(())
+}
+
+fn get_formatted_size(bytes: usize) -> String {
+    let mut formatted: String = String::new();
+    if bytes > 1024 * 1024 * 1024 {
+        let num = bytes as f32;
+        let num = num / (1024.0 * 1024.0 * 1024.0);
+        formatted.push_str(&num.to_string());
+        formatted.push_str(" GB");
+        return formatted;
+    }
+    if bytes > 1024 * 1024 {
+        let num = bytes as f32;
+        let num = num / (1024.0 * 1024.0);
+        formatted.push_str(&num.to_string());
+        formatted.push_str(" MB");
+        return formatted;
+    }
+    if bytes > 1024 {
+        let num = bytes as f32;
+        let num = num / (1024.0);
+        formatted.push_str(&num.to_string());
+        formatted.push_str(" KB");
+        return formatted;
+    }
+    let num = bytes as f32;
+    formatted.push_str(&num.to_string());
+    formatted.push_str(" bytes");
+    return formatted;
 }
 
 fn get_contents(root: &str) -> ReadDir {
