@@ -60,14 +60,15 @@ fn start(path: &str) -> Result<()> {
         vec.push(entry);
     }
     FileEntry::sort(&mut vec);
-
+    let mut total: usize = 0;
     for entry in vec {
         let name = entry.name;
         let size = entry.size;
         let mb: f32 = entry.size as f32 / (1024.0 * 1024.0);
+        total += entry.size;
         println!("{}: {}, ({} MB)", name, size, mb);
     }
-
+    println!("Total: {} ({} MB)", total, total as f32 / (1024.0 * 1024.0));
     Ok(())
 }
 
