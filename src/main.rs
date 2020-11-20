@@ -40,9 +40,8 @@ fn main() {
     }
     let args = args.skip(1);
     let args = args.collect::<Vec<String>>().join(" ");
-    match start(&args) {
-        Ok(_) => println!("started successfully"),
-        Err(err) => println!("error: {}", err),
+    if let Err(err) = start(&args) {
+        println!("Error: {}", err);
     }
 }
 
