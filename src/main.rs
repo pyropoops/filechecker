@@ -2,6 +2,7 @@ use std::fs::ReadDir;
 use std::{fs, path::Path};
 
 use anyhow::Result;
+use std::env;
 use walkdir::WalkDir;
 
 struct FileEntry {
@@ -32,7 +33,14 @@ impl FileEntry {
 }
 
 fn main() {
-    match start("C:/Program Files") {
+    let mut args = env::args();
+    if args.len() == 1 {
+        println!("Usage - {} <path>", args.nth(0).unwrap());
+        return;
+    }
+    let args = args.skip(1);
+    let args = args.collect::<Vec<String>>().join(" ");
+    match start(&args) {
         Ok(_) => println!("started successfully"),
         Err(err) => println!("error: {}", err),
     }
