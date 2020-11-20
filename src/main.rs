@@ -66,7 +66,7 @@ fn start(path: &str) -> Result<()> {
         total += entry.size;
         println!("{}: {} MB", name, size);
     }
-    println!("Total: {} ({} MB)", total, total as f32 / (1024.0 * 1024.0));
+    println!("Total: {} MB", total as f32 / (1024.0 * 1024.0));
     Ok(())
 }
 
