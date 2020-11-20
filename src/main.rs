@@ -5,6 +5,8 @@ use anyhow::Result;
 use std::env;
 use walkdir::WalkDir;
 
+const SIZE: usize = 1024;
+
 struct FileEntry {
     name: String,
     size: usize,
@@ -71,23 +73,23 @@ fn start(path: &str) -> Result<()> {
 
 fn get_formatted_size(bytes: usize) -> String {
     let mut formatted: String = String::new();
-    if bytes > 1024 * 1024 * 1024 {
+    if bytes > SIZE * SIZE * SIZE {
         let num = bytes as f32;
-        let num = num / (1024.0 * 1024.0 * 1024.0);
+        let num = num / (SIZE * SIZE * SIZE) as f32;
         formatted.push_str(&num.to_string());
         formatted.push_str(" GB");
         return formatted;
     }
-    if bytes > 1024 * 1024 {
+    if bytes > SIZE * SIZE {
         let num = bytes as f32;
-        let num = num / (1024.0 * 1024.0);
+        let num = num / (SIZE * SIZE) as f32;
         formatted.push_str(&num.to_string());
         formatted.push_str(" MB");
         return formatted;
     }
-    if bytes > 1024 {
+    if bytes > SIZE {
         let num = bytes as f32;
-        let num = num / (1024.0);
+        let num = num / SIZE as f32;
         formatted.push_str(&num.to_string());
         formatted.push_str(" KB");
         return formatted;
