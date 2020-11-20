@@ -41,12 +41,12 @@ fn main() {
 fn start(path: &str) -> Result<()> {
     let mut vec: Vec<FileEntry> = vec![];
     for folder in get_contents(path) {
-        let folder = folder?;
+        let folder = folder.unwrap();
         let name = folder.file_name();
         let name = name.to_str().unwrap();
 
         let path = folder.path();
-        let size = get_size(&path).unwrap();
+        let size = get_size(&path)?;
 
         let entry = FileEntry::new(String::from(name), size);
         vec.push(entry);
